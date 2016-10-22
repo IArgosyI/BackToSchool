@@ -8,33 +8,46 @@ public enum CardType
     Social
 };
 
-public class Card : MonoBehaviour{
+public class CardDetail
+{
     public CardType type;
     public int level;
-    public CardEffect effect;
-    public Sprite front;
-    public Sprite back;
-    public Card(int level, CardType type)
+    public int id;
+    public string name;
+    public string text;
+
+    public CardDetail(int id, CardType type, int level, string name, string text)
     {
-        this.level = level;
         this.type = type;
-        effect = null;
+        this.level = level;
+        this.id = id;
+        this.name = name;
+        this.text = text;
     }
 }
 
-public class CardEffect
-{
-    public void play()
+public interface ICard {
+    CardDetail cardDetail
     {
-
+        get;
     }
+
+    void PlayCard(Player player);
 }
 
 public class Deck
 {
-    Card[] cards;
+    ICard[] cards;
     int size;
-    public Card GetNextCard()
+    public int maxSize = 100;
+
+    public Deck ()
+    {
+        size = 0;
+        cards = new ICard[maxSize];
+    }
+
+    public ICard GetNextCard()
     {
         if(size == 0)
         {
@@ -44,7 +57,7 @@ public class Deck
         return cards[size];
     }
 
-    public void AddCard(Card card)
+    public void AddCard(ICard card)
     {
         cards[size] = card;
         size++;
@@ -57,7 +70,7 @@ public class Deck
             int pos1 = Random.Range(0, size);
             int pos2 = Random.Range(0, size);
             //Swap pos1 and pos2
-            Card tmp = cards[pos1];
+            ICard tmp = cards[pos1];
             cards[pos1] = cards[pos2];
             cards[pos2] = tmp;
         }

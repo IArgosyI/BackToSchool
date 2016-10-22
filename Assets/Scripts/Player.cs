@@ -13,14 +13,14 @@ public class Character
 [Serializable]
 public class Player : Character {
     //Status
-    int money;
-    int knowledge;
+    public int money;
+    public int knowledge;
 
     //Traits
-    int intelligence;
-    int charisma;
-    int tolerance;
-    int luck;
+    public int intelligence;
+    public int charisma;
+    public int tolerance;
+    public int luck;
 
     public Player(string name)
     {
